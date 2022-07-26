@@ -2,7 +2,11 @@ package com.example.testapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -13,20 +17,23 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView( new MyOwnView( this ) );
     }
 
-    public void addOperation(View v){
-        Intent i = new Intent(this, addClass.class);
+    //crear vista propia
+    public class MyOwnView View{
+        public MyOwnView(Context cntx){
+            super( cntx );
+        }
 
-        EditText numberOneText = (EditText) findViewById(R.id.editTextTextPersonName);
-        EditText numberTwoText = (EditText) findViewById(R.id.editTextTextPersonName2);
+        @Override
+        protected void onDraw(Canvas canvas){
+            Paint pencil = new Paint();
+            pencil.setColor( Color.BLUE );
+            pencil.setStrokeWidth( 8 );
+            pencil.setStyle( Paint.Style.FILL );
 
-        int n1 = Integer.parseInt(numberOneText.getText().toString());
-        int n2 = Integer.parseInt(numberTwoText.getText().toString());
-
-        i.putExtra( "numberOne", n1);
-        i.putExtra("numberTwo", n2);
-        startActivity(i);
+            canvas.drawCircle(175, 175, 100, pencil);
+        }
     }
 }
