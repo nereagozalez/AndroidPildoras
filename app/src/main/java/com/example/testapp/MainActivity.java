@@ -8,6 +8,8 @@ import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Path;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -30,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected void onDraw(Canvas canvas){
+            /*
             Paint pencil = new Paint(); //creamos pincel
             //pencil.setColor( Color.BLUE ); //tambien se puede poner en exadecimal
             //pencil.setColor(Color.argb(125, 167,222, 25)); //otra forma de dar color
@@ -42,6 +45,24 @@ public class MainActivity extends AppCompatActivity {
             int myColor;
             myColor = ContextCompat.getColor(getContext(),R.color.white);
             pencil.setColor( myColor ); //color de recursos
+            */
+            //Trazos -> Canvas (drawPath(path)) y Path class
+            Path path = new Path();
+            path.addCircle(500,500,200,Path.Direction.CCW); //trazo circulo creado (path direction es dónde lo dibuja, fuera dentro etc)
+            Paint p = new Paint();
+            p.setColor(Color.RED);
+            p.setStrokeWidth(8);
+            p.setStyle(Paint.Style.STROKE);
+            canvas.drawPath(path,p); //le pasamos el pincel y el trazo para que lo dibuje
+
+            //escribir alrededor de la forma
+            p.setStrokeWidth(1); //cambiamos grosor
+            p.setStyle(Paint.Style.FILL);
+            p.setTextSize(40);
+            p.setTypeface(Typeface.SANS_SERIF);//tipo de letra
+
+            canvas.drawTextOnPath("Curso Pildoras de NG", path, 40, 100, p);
+
         }
     }
 }
